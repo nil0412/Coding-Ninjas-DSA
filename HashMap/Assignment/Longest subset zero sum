@@ -19,7 +19,34 @@ Explanation:
 The five elements that form the longest subarray that sum up to zero are: -387, -435, -5, -70, 897 
 
 
+Main Code:
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	static StringTokenizer st;
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int arr[] = new int[n];
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
+		System.out.println(Solution.lengthOfLongestSubsetWithZeroSum(arr));
+	}
+
+}
+
+
 Solution:
+
 
 import java.util.HashMap;
 

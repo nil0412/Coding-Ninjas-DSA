@@ -1,0 +1,88 @@
+Minimum Count
+
+
+
+Given an integer N, find and return the count of minimum numbers, sum of whose squares is equal to N.
+That is, if N is 4, then we can represent it as : {1^2 + 1^2 + 1^2 + 1^2} and {2^2}. Output will be 1, as 1 is the minimum count of numbers required.
+Note : x^y represents x raise to the power y.
+Input Format :
+Integer N
+Output Format :
+Required minimum count
+Constraints :
+1 <= N <= 50
+Sample Input 1 :
+12
+Sample Output 1 :
+3
+Sample Output 1 Explanation :
+12 can be represented as :
+1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1
+1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 1^1 + 2^2
+1^1 + 1^1 + 1^1 + 1^1 + 2^2 + 2^2
+2^2 + 2^2 + 2^2
+As we can see, the output should be 3.
+Sample Input 2 :
+9
+Sample Output 2 :
+1
+
+
+Main Code:
+
+
+import java.util.Scanner;
+
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+			int num = s.nextInt();
+			System.out.println(Solution.minCount(num));
+	}
+
+}
+
+
+
+Solution:
+
+
+import java.lang.Math;
+public class Solution {
+    public static int minCount(int n){
+        
+        /* Your class should be named Solution
+	 	 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+		 *Taking input and printing output is handled automatically.*/
+        
+        int num =  (int)(Math.sqrt(n));
+        while(num>=1){
+            int i = 1;
+            int sq = num*num;
+            while(sq<=n){
+                if(sq==n){
+                    return i;
+                }
+                else if(sq<n){
+            		sq += num*num; 
+                    if(sq>n){
+                        sq = sq-num*num;
+                        num--;
+                        continue;
+                    }
+                    i++;
+                }
+                else{
+                    break;
+                }
+            }
+            num--;
+        }
+        return 1;
+    }
+}

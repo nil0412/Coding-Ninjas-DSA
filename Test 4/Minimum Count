@@ -47,49 +47,7 @@ public class Main {
 
 
 
-Solution 1:
-
-
-import java.lang.Math;
-public class Solution {
-    public static int minCount(int n){
-        
-        /* Your class should be named Solution
-	 	 * Don't write main().
-		 * Don't read input, it is passed as function argument.
-		 * Return output and don't print it.
-		 *Taking input and printing output is handled automatically.*/
-        
-        int num =  (int)(Math.sqrt(n));
-        while(num>=1){
-            int i = 1;
-            int sq = num*num;
-            while(sq<=n){
-                if(sq==n){
-                    return i;
-                }
-                else if(sq<n){
-            		sq += num*num; 
-                    if(sq>n){
-                        sq = sq-num*num;
-                        num--;
-                        continue;
-                    }
-                    i++;
-                }
-                else{
-                    break;
-                }
-            }
-            num--;
-        }
-        return 1;
-    }
-}
-
-
-
-Solution 2:
+Solution:
 
 import java.lang.Math;
 

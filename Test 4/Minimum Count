@@ -47,7 +47,7 @@ public class Main {
 
 
 
-Solution:
+Solution 1:
 
 
 import java.lang.Math;
@@ -85,4 +85,33 @@ public class Solution {
         }
         return 1;
     }
+}
+
+
+
+Solution 2:
+
+import java.lang.Math;
+
+public class Solution {
+	/* Your class should be named Solution
+	 * Don't write main().
+	 * Don't read input, it is passed as function argument.
+	 * Return output and don't print it.
+	 * Taking input and printing output is handled automatically.
+	 */
+	public static int minCount(int n){
+		if(n <= 1){
+			return n;
+		}
+		int ans = n;
+        
+        int sr = (int)Math.sqrt(n);
+        
+		for(int i = 1; i <= sr; i++){
+			int square = i * i;
+			ans = Math.min(ans, minCount(n - square) + 1);
+		}
+		return ans;
+	}
 }

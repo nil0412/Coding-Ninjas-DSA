@@ -1,0 +1,124 @@
+Inplace Heap Sort
+
+
+Given an integer array of size N. Sort this array (in decreasing order) using heap sort.
+Note: Space complexity should be O(1).
+Input Format:
+The first line of input contains an integer, that denotes the value of the size of the array or N.
+The following line contains N space separated integers, that denote the value of the elements of the array.
+Output Format :
+The first and only line of output contains array elements after sorting. The elements of the array in the output are separated by single space.
+Constraints :
+1 <= n <= 10^6
+Time Limit: 1 sec
+Sample Input 1:
+6 
+2 6 8 5 4 3
+Sample Output 1:
+8 6 5 4 3 2
+
+
+Main Code:
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+	static StringTokenizer st;
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		st = new StringTokenizer(br.readLine());
+		int input[] = new int[n];
+		for (int i = 0; i < n; i++) {
+			input[i] = Integer.parseInt(st.nextToken());
+		}
+		Solution.inplaceHeapSort(input);
+		for (int i : input) {
+			System.out.print(i + " ");
+		}
+	}
+
+}
+
+
+Solution:
+
+public class Solution {
+
+    public static void inplaceHeapSort(int arr[]) {
+        /* Your class should be named Solution
+		* Don't write main().
+		* Don't read input, it is passed as function argument.
+		* Change in the given input itself.
+		* Taking input and printing output is handled automatically.
+		*/
+
+        int n = arr.length;
+        //downHeapify
+        for(int i=n/2-1; i>=0; i--){
+            int parentIndex = i;
+            int leftIndex = 2*parentIndex+1;
+            int rightIndex = 2*parentIndex+2;
+            int maxIndex = parentIndex;
+            while(leftIndex<n){
+                if(arr[leftIndex]<arr[maxIndex]){
+                    maxIndex = leftIndex;
+                }
+                if(rightIndex<n && arr[rightIndex]<arr[maxIndex]){
+                    maxIndex = rightIndex;
+                }
+                if(maxIndex==parentIndex){
+                    break;
+                }
+                else{
+                    int temp = arr[maxIndex];
+                    arr[maxIndex] = arr[parentIndex];
+                    arr[parentIndex] = temp;
+                    parentIndex = maxIndex;
+                    leftIndex = 2*parentIndex+1;
+                    rightIndex = 2*parentIndex+2;
+                }
+            }
+        }
+
+        //sortingByRemovingAndPlacinAtLast
+        int lastIndex = n-1;
+        int count = 0;
+        while(count<n){
+            int t = arr[0];
+            arr[0] = arr[lastIndex];
+            arr[lastIndex] = t;
+            int parentIndex = 0;
+            int leftIndex = 2*parentIndex+1;
+            int rightIndex = 2*parentIndex+2;
+            int maxIndex = parentIndex;
+            while(leftIndex<lastIndex){
+                if(arr[leftIndex]<arr[maxIndex]){
+                    maxIndex = leftIndex;
+                }
+                if(rightIndex<lastIndex && arr[rightIndex]<arr[maxIndex]){
+                    maxIndex = rightIndex;
+                }
+                if(maxIndex==parentIndex){
+                    break;
+                }
+                else{
+                    int temp = arr[maxIndex];
+                    arr[maxIndex] = arr[parentIndex];
+                    arr[parentIndex] = temp;
+                    parentIndex = maxIndex;
+                    leftIndex = 2*parentIndex+1;
+                    rightIndex = 2*parentIndex+2;
+                }
+            }
+            count++;
+            lastIndex--;
+        }
+    }
+}

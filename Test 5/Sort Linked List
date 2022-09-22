@@ -1,0 +1,152 @@
+Sort Linked List
+
+
+
+Given a Linked List, which has nodes in alternating ascending and descending orders. Sort the list efficiently and space complexity should be O(1).
+You just need to return the head of sorted linked list, don't print the elements.
+Input format :
+Line 1 : Linked list elements of length L (separated by space and terminated by -1)
+Line 2 : Integer n
+Output format :
+Updated list elements (separated by space)
+Sample Input 1 :
+10 40 53 30 67 12 89 -1
+Sample Output 1 :
+10 12 30 40 53 67 89
+
+
+Main Code:
+
+import java.util.Scanner;
+
+
+class LinkedListNode<T> {
+	T data;
+	LinkedListNode<T> next;
+	
+	public LinkedListNode(T data) {
+		this.data = data;
+		this.next = null;
+	}
+}
+
+public class Runner {
+	
+	public static LinkedListNode<Integer> takeInput(Scanner s) {
+		LinkedListNode<Integer> head = null;
+		LinkedListNode<Integer> tail = null;
+		
+		int data = s.nextInt();
+		
+		while(data != -1) {
+			LinkedListNode<Integer> newNode = new LinkedListNode<>(data);
+			
+			if(head == null) {
+				head = newNode;
+				tail = newNode;
+			} else {
+				tail.next = newNode;
+				tail = newNode;
+			}
+			data = s.nextInt();
+		}
+		return head;
+	}
+
+	public static void printList(LinkedListNode<Integer> head) {
+		while(head != null) {
+			System.out.print(head.data + " ");
+			head = head.next;
+		}
+		
+		// System.out.println("null");
+		System.out.println();
+		return;
+	}
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+
+		LinkedListNode<Integer> head = takeInput(s);
+		s.close();
+
+		printList(Solution.sort(head));
+
+	}
+}
+
+
+Solution:
+
+public class Solution {
+
+	public static LinkedListNode<Integer> mergeTwoSortedLinkedLists(LinkedListNode<Integer> head1, LinkedListNode<Integer> head2) {
+        //Your code goes here
+        LinkedListNode<Integer> head = null;
+        if(head1 != null && head2 != null){
+            if(head1.data<head2.data){
+                head = head1;
+                head1 = head1.next;
+            }
+            else{
+                head = head2;
+                head2 = head2.next;
+            }
+        }
+        LinkedListNode<Integer> temp=head;
+        
+        while(head1!=null && head2!=null){
+            if(head1.data<head2.data){
+                temp.next = head1;
+                temp = head1;
+                head1 = head1.next;
+            }
+            else{
+                temp.next = head2;
+                temp = head2;
+                head2 = head2.next;
+            }
+        }
+        if(head1!=null){
+            if(head == null){
+                head = head1;
+                return head;
+            }
+            temp.next =  head1;    
+        }
+        else if(head2!=null){
+            if(head == null){
+                head = head2;
+                return head;
+            }
+            temp.next =  head2;     
+        }
+        return head;
+    }
+    
+    public static LinkedListNode<Integer> midPoint(LinkedListNode<Integer> head) {
+        //Your code goes here
+        if(head==null){
+            return head;
+        }
+        LinkedListNode<Integer> slow = head;
+        LinkedListNode<Integer> fast = head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+	public static LinkedListNode<Integer> sort(LinkedListNode<Integer> head) {
+		//Your code goes here
+        if(head == null || head.next == null){
+            return head;
+        }
+        LinkedListNode<Integer> mid = midPoint(head);
+        LinkedListNode<Integer> head2 = mid.next;
+        mid.next = null;
+        return mergeTwoSortedLinkedLists(sort(head),sort(head2));
+	}
+
+}
